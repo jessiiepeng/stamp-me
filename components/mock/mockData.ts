@@ -36,7 +36,7 @@ const mockStamp4: Stamp = {
     imageUrl: "https://i.pinimg.com/736x/0c/f1/0d/0cf10d33fc844fc8e8bde36ad42d0500.jpg"
 }
 
-const mockStampCollection: Stamp[] = [mockStamp, mockStamp2, mockStamp3, mockStamp4]
+const mockStampCollection: Stamp[] = [mockStamp, mockStamp2, mockStamp3, mockStamp4, mockStamp3]
 
 export default mockStampCollection
 

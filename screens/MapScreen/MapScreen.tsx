@@ -6,11 +6,10 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { RootTabScreenProps } from '../../types';
 import SelectedMapMarker from './SelectedMapMarker';
-import { Stamp } from '../types/StampTypes';
 import StampMap from './StampMap';
 import mockStampCollection from '../../components/mock/mockData';
 
-export default function MapScreen({ navigation }: RootTabScreenProps<'MapScreen'>) {
+export default function MapScreen({ navigation }: RootTabScreenProps<'StampMap'>) {
     const [selectedStampIndex, setSelectedStampIndex] = useState<number>(-1);
     // todo change initial region to position of user
     return (

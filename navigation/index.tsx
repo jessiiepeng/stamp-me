@@ -12,10 +12,13 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import AddStamps from '../screens/AddStamps/AddStamps';
 import MapScreen from '../screens/MapScreen/MapScreen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import StampCollection from '../screens/StampCollection';
+import StampCollection from '../screens/StampCollection/StampCollection';
+import StampDetail from '../screens/StampDetail/StampDetail';
+import UserProfile from '../screens/UserProfile/UserProfile';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -42,7 +45,10 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
       </Stack.Group>
+      <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
+      <Stack.Screen name='AddStamps' component={AddStamps} />
     </Stack.Navigator>
   );
 }
@@ -56,32 +62,48 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
+  // todo convert info model to the profile icon so you can logout and stuff!
+
   return (
     <BottomTab.Navigator
-      initialRouteName="MapScreen"
+      initialRouteName="StampMap"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="MapScreen"
+        name="StampMap"
         component={MapScreen}
-        options={({ navigation }: RootTabScreenProps<'MapScreen'>) => ({
-          title: 'Map Screen',
+        options={({ navigation }: RootTabScreenProps<'StampMap'>) => ({
+          title: 'Stamp Map',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() => navigation.navigate('UserProfile')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
-                name="info-circle"
+                name="user"
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
             </Pressable>
           ),
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate('AddStamps')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome
+                name="plus"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginLeft: 15 }}
+              />
+            </Pressable>
+          )
         })}
       />
       <BottomTab.Screen

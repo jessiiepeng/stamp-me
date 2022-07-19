@@ -5,12 +5,11 @@ import { View, Text } from '../../components/Themed';
 
 interface SelectedMapMarkerProps {
     stamp: Stamp;
+    isScreenView?: boolean;
 }
 
 export default function SelectedMapMarker(props: SelectedMapMarkerProps) {
-    const { stamp } = props;
-    console.log(stamp);
-    console.log(stamp.name)
+    const { stamp, isScreenView } = props;
     // placeholder
     const getDate = () => {
         const d = new Date(stamp.stampDate);
@@ -18,8 +17,8 @@ export default function SelectedMapMarker(props: SelectedMapMarkerProps) {
     };
 
     return (
-        <View style={styles.stampInfo}>
-            <Image style={styles.tinyLogo} source={{
+        <View style={isScreenView ? styles.stampInfoScreen : styles.stampInfoMap}>
+            <Image style={isScreenView ? styles.largeLogo : styles.tinyLogo} source={{
                 uri: stamp.imageUrl,
             }} />
             <View style={styles.stampDetails}>
@@ -36,11 +35,20 @@ export default function SelectedMapMarker(props: SelectedMapMarkerProps) {
 }
 
 const styles = StyleSheet.create({
-    stampInfo: {
+    stampInfoMap: {
         // flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
         flexDirection: 'row',
+        marginTop: '5%',
+        width: '100%',
+        paddingHorizontal: '4%'
+    },
+    stampInfoScreen: {
+        // flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexDirection: 'column',
         marginTop: '5%',
         width: '100%',
         paddingHorizontal: '4%'
@@ -50,6 +58,11 @@ const styles = StyleSheet.create({
     tinyLogo: {
         width: 100,
         height: 100,
+        padding: 2
+    },
+    largeLogo: {
+        width: 200,
+        height: 200,
         padding: 2
     },
     stampDetails: {
