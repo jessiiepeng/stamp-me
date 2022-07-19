@@ -4,6 +4,7 @@
  *
  */
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -48,7 +49,7 @@ function RootNavigator() {
         <Stack.Screen name="UserProfile" component={UserProfile} options={{ title: 'My Profile' }} />
       </Stack.Group>
       <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
-      <Stack.Screen name='AddStamps' component={AddStamps} />
+      <Stack.Screen name='AddStamps' component={AddStamps} options={{ title: 'Stamp Processing' }} />
     </Stack.Navigator>
   );
 }
@@ -75,7 +76,7 @@ function BottomTabNavigator() {
         component={MapScreen}
         options={({ navigation }: RootTabScreenProps<'StampMap'>) => ({
           title: 'Stamp Map',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('UserProfile')}
@@ -110,8 +111,8 @@ function BottomTabNavigator() {
         name="StampCollection"
         component={StampCollection}
         options={{
-          title: 'Stamp Collection',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'My Stamp Collection',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="postage-stamp" size={30} color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -125,5 +126,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
 }

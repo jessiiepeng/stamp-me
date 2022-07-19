@@ -26,7 +26,7 @@ export default function UserProfile({ navigation }: { navigation: any }) {
                 <Text lightColor="rgba(0,0,0,0.8)"
                     darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Stamps approved: 6</Text>
             </View>
-            <Pressable style={styles.logoutButton} onPress={() => { }} >
+            <Pressable style={({ pressed }) => [styles.logoutButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { }} >
                 <Text style={styles.logoutText}>Logout</Text>
             </Pressable>
 
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'white',
+        color: 'white'
     }
 });

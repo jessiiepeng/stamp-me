@@ -16,7 +16,7 @@ export default function MapScreen({ navigation }: RootTabScreenProps<'StampMap'>
         <View style={styles.container}>
             <StampMap stampCollection={mockStampCollection} setSelectedStampIndex={setSelectedStampIndex} />
             {selectedStampIndex >= 0 ? < SelectedMapMarker stamp={mockStampCollection[selectedStampIndex]} /> :
-                <Text style={styles.body} >Select a marker to see more details :D </Text>}
+                <Text style={styles.body} >Select a marker to see more details! </Text>}
         </View>
     );
 }
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     },
     body: {
         fontSize: 15,
-        paddingTop: 30,
+        marginTop: 20
     }
 });
