@@ -45,7 +45,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="UserProfile" component={UserProfile} options={{ title: 'My Profile' }} />
       </Stack.Group>
       <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
       <Stack.Screen name='AddStamps' component={AddStamps} />
