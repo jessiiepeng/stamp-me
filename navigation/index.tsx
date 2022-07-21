@@ -14,6 +14,7 @@ import { ColorSchemeName, Pressable } from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import AddStamps from '../screens/AddStamps/AddStamps';
+import SubmitStamp from '../screens/AddStamps/SubmitStamp';
 import MapScreen from '../screens/MapScreen/MapScreen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -45,11 +46,11 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
         <Stack.Screen name="UserProfile" component={UserProfile} options={{ title: 'My Profile' }} />
       </Stack.Group>
       <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
       <Stack.Screen name='AddStamps' component={AddStamps} options={{ title: 'Stamp Processing' }} />
+      <Stack.Screen name="SubmitStamp" component={SubmitStamp} options={{ title: 'Submit new stamp' }} />
     </Stack.Navigator>
   );
 }

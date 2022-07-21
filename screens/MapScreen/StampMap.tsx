@@ -1,10 +1,10 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Stamp } from '../types/StampTypes';
+import { CollectedStamp } from '../types/StampTypes';
 
 interface StampMapProps {
-    stampCollection: Stamp[];
+    stampCollection: CollectedStamp[];
     setSelectedStampIndex: (n: number) => void;
 }
 

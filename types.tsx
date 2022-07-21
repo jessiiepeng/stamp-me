@@ -6,7 +6,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Stamp } from './screens/types/StampTypes';
+import { CollectedStamp } from './screens/types/StampTypes';
 
 declare global {
   namespace ReactNavigation {
@@ -18,9 +18,10 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  StampDetail: { stamp: Stamp };
+  StampDetail: { stamp: CollectedStamp };
   AddStamps: undefined;
   UserProfile: undefined;
+  SubmitStamp: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

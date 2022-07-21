@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stamp } from '../types/StampTypes';
+import { CollectedStamp } from '../types/StampTypes';
 import { StyleSheet, Image } from "react-native";
 import { View, Text } from '../../components/Themed';
 
 interface SelectedMapMarkerProps {
-    stamp: Stamp;
+    stamp: CollectedStamp;
     isScreenView?: boolean;
 }
 

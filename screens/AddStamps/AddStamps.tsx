@@ -9,7 +9,7 @@ export default function AddStamps({ navigation }: { navigation: any }) {
             <Text lightColor="black"
                 darkColor="white" style={styles.prompt}> What do you want to do? </Text>
             <View style={styles.buttonGroup}>
-                <Pressable style={({ pressed }) => [styles.addStampButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { }} >
+                <Pressable style={({ pressed }) => [styles.addStampButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { navigation.navigate("SubmitStamp") }} >
                     <Text style={styles.buttonText}>Submit a stamp</Text>
                 </Pressable>
                 <Pressable style={({ pressed }) => [styles.reviewStampsButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { }} >
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     },
     prompt: {
         fontSize: 20,
-        fontWeight: 'bold',
         fontStyle: 'italic',
     },
     buttonGroup: {
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 60,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#f5d488',
+        backgroundColor: '#b55b46',
         marginVertical: 10,
     },
     reviewStampsButton: {
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 60,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#f5b488',
+        backgroundColor: '#9d655a',
         marginVertical: 10
     },
     approveStampsButton: {
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 60,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#dc8ba3',
+        backgroundColor: '#647390',
         marginVertical: 10
     },
     buttonText: {

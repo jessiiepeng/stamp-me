@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#ff6962',
+        backgroundColor: '#b55b46',
         marginTop: 80
     },
     logoutText: {
