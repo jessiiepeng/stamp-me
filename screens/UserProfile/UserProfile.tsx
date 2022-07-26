@@ -1,8 +1,11 @@
+import { getAuth, signOut } from 'firebase/auth';
 import React from 'react';
 import { StyleSheet, Image, Button, Pressable } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
+import app from '../../config/firebase';
 
+const auth = getAuth(app);
 
 export default function UserProfile({ navigation }: { navigation: any }) {
     // todo replace placehodler with actual user information
@@ -16,9 +19,9 @@ export default function UserProfile({ navigation }: { navigation: any }) {
             }} />
             <View style={styles.userInfo}>
                 <Text lightColor="rgba(0,0,0,0.8)"
-                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText} >Name: Jessie Peng</Text>
-                <Text lightColor="rgba(0,0,0,0.8)"
-                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Username: yuesie</Text>
+                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText} >Email: {auth.currentUser?.email}</Text>
+                {/* <Text lightColor="rgba(0,0,0,0.8)"
+                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Username: yuesie</Text> */}
                 <Text lightColor="rgba(0,0,0,0.8)"
                     darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Joined on: July 21, 2022</Text>
                 <Text lightColor="rgba(0,0,0,0.8)"
@@ -27,7 +30,7 @@ export default function UserProfile({ navigation }: { navigation: any }) {
                     darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Stamps approved: 6</Text>
             </View>
             <Pressable style={({ pressed }) => [styles.logoutButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { }} >
-                <Text style={styles.logoutText}>Logout</Text>
+                <Text style={styles.logoutText} onPress={() => signOut(auth)}>Logout</Text>
             </Pressable>
 
         </View>
