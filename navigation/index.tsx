@@ -22,7 +22,10 @@ import StampCollection from '../screens/StampCollection/StampCollection';
 import StampDetail from '../screens/StampDetail/StampDetail';
 import UserProfile from '../screens/UserProfile/UserProfile';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { useAuthentication } from '../utils/hooks/useAuthentication';
+import AuthStack from './authStack';
 import LinkingConfiguration from './LinkingConfiguration';
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -39,20 +42,23 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
 function RootNavigator() {
+  const { user } = useAuthentication();
+  console.log(user)
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="UserProfile" component={UserProfile} options={{ title: 'My Profile' }} />
-      </Stack.Group>
-      <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
-      <Stack.Screen name='AddStamps' component={AddStamps} options={{ title: 'Stamp Processing' }} />
-      <Stack.Screen name="SubmitStamp" component={SubmitStamp} options={{ title: 'Submit new stamp' }} />
-    </Stack.Navigator>
-  );
+    user ?
+      <Stack.Navigator>
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="UserProfile" component={UserProfile} options={{ title: 'My Profile' }} />
+        </Stack.Group>
+        <Stack.Screen name="StampDetail" component={StampDetail} options={{ title: 'Stamp Details' }} />
+        <Stack.Screen name='AddStamps' component={AddStamps} options={{ title: 'Stamp Processing' }} />
+        <Stack.Screen name="SubmitStamp" component={SubmitStamp} options={{ title: 'Submit new stamp' }} />
+      </Stack.Navigator> :
+      <AuthStack />
+  )
 }
 
 /**

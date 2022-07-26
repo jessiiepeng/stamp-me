@@ -24,6 +24,12 @@ export type RootStackParamList = {
   SubmitStamp: undefined;
 };
 
+export type AuthStackParamList = {
+  Welcome: undefined,
+  SignInScreen: undefined,
+  SignOutScreen: undefined,
+}
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
   Screen
