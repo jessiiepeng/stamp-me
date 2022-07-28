@@ -8,10 +8,12 @@ import { RootTabScreenProps } from '../../types';
 import SelectedMapMarker from './SelectedMapMarker';
 import StampMap from './StampMap';
 import mockStampCollection from '../../components/mock/mockData';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 
 export default function MapScreen({ navigation }: RootTabScreenProps<'StampMap'>) {
     const [selectedStampIndex, setSelectedStampIndex] = useState<number>(-1);
     // todo change initial region to position of user
+
     return (
         <View style={styles.container}>
             <StampMap stampCollection={mockStampCollection} setSelectedStampIndex={setSelectedStampIndex} />

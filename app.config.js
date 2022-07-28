@@ -21,7 +21,11 @@ export default {
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "To upload stamps",
+        // "NSLocationWhenInUseUsageDescription": "Why are you requesting access to the device’s camera?"
+      }
     },
     "android": {
       "adaptiveIcon": {

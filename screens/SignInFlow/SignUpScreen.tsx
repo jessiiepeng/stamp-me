@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Dimensions, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import { RootTabScreenProps } from '../../types';
-import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { MaterialIcons, Entypo, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import app from '../../config/firebase';
+import { getDatabase, ref, onValue, set, push } from 'firebase/database';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 
 const auth = getAuth(app);
+
 
 export default function SignUpScreen({ navigation }: any) {
     const [value, setValue] = React.useState({
         email: '',
         password: '',
-        error: ''
+        error: '',
+        username: '',
+        profile_picture: '',
     })
 
+    function writeUserData(userId: any, name: string, email: string, imageUrl: string) {
+        const db = getDatabase(app);
+        console.log('database', db)
+        const today = Date.now();
+        set(ref(db, 'users/' + userId), {
+            username: name,
+            email: email,
+            profile_picture: imageUrl,
+            created_at: today,
+        });
+    }
 
     async function signUp() {
         if (value.email === '' || value.password === '') {
@@ -28,7 +44,11 @@ export default function SignUpScreen({ navigation }: any) {
         }
 
         try {
-            await createUserWithEmailAndPassword(auth, value.email, value.password);
+            await createUserWithEmailAndPassword(auth, value.email, value.password)
+                .then(userCredential => {
+                    writeUserData(userCredential.user.uid, value.username, value.email, value.profile_picture)
+                });
+
             // navigation.navigate('Sign In');
         } catch (error: any) {
             setValue({
@@ -64,6 +84,30 @@ export default function SignUpScreen({ navigation }: any) {
                         autoCapitalize='none'
                     />
                 </View>
+                <View style={styles.inputContainer}>
+                    <Entypo name="pencil" size={24} color="black" />
+                    <TextInput
+                        placeholder='Username'
+                        style={styles.control}
+                        value={value.username}
+                        onChangeText={(text: string) => setValue({ ...value, username: text })}
+                        autoCapitalize='none'
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <FontAwesome name="user-circle-o" size={24} color="black" />
+                    <TextInput
+                        placeholder='Profile Picture Image URL'
+                        style={styles.control}
+                        value={value.profile_picture}
+                        onChangeText={(text: string) => setValue({ ...value, profile_picture: text })}
+                        autoCapitalize='none'
+                    />
+                </View>
+                {value.profile_picture ? <Image style={styles.userPicture} source={{
+                    uri: value.profile_picture
+                }} /> : <View style={{ alignItems: 'center' }}><FontAwesome name="user-circle-o" size={150} color="black" /></View>}
+
                 <TouchableOpacity style={styles.button2} onPress={signUp}>
                     <Text style={{ color: 'white' }}>Sign up</Text>
                 </TouchableOpacity>
@@ -109,5 +153,13 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         marginVertical: 10,
         paddingBottom: 5,
-    }
+    },
+    userPicture: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        overflow: 'hidden',
+        marginTop: 50
+
+    },
 });

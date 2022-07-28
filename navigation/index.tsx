@@ -44,7 +44,6 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const { user } = useAuthentication();
-  console.log(user)
   return (
     user ?
       <Stack.Navigator>
