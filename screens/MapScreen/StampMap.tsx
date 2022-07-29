@@ -22,7 +22,7 @@ export default function StampMap(props: StampMapProps) {
             longitude: -79.3832,
             latitudeDelta: 0.04,
             longitudeDelta: 0.1,
-        }} >
+        }} showsUserLocation={true}>
             {
                 stampCollection.map((stamp, index) => (
                     <Marker

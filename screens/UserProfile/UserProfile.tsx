@@ -1,9 +1,11 @@
 import { getAuth, signOut } from 'firebase/auth';
-import React from 'react';
+import { getDatabase, onValue, ref } from 'firebase/database';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, Button, Pressable } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import app from '../../config/firebase';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 
 const auth = getAuth(app);
 
@@ -12,6 +14,33 @@ export default function UserProfile({ navigation }: { navigation: any }) {
     // todo also make fields maybe editable like changing profile picture ?
     // probably also want to show how many stamps collected or something?
     const placeholderPicture = "https://wegotthiscovered.com/wp-content/uploads/2022/05/Spy-x-Family-anya.png"
+    const [joinedDate, setJoinedDate] = useState<number>(0);
+    const { user } = useAuthentication();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        setLoading(true)
+        const db = getDatabase();
+        const createdAtRef = ref(db, 'users/' + user?.uid + '/created_at');
+        let data = 0;
+        onValue(createdAtRef, (snapshot) => {
+            console.log(snapshot)
+            data = snapshot.val();
+            setJoinedDate(data);
+            setLoading(false)
+        });
+
+    })
+
+    useEffect(() => {
+        console.log('rerender joined date', joinedDate);
+    }, [joinedDate, loading])
+
+    const getDate = () => {
+        const d = new Date(joinedDate);
+        return d.toLocaleDateString();
+    }
+
     return (
         <View style={styles.container}>
             <Image style={styles.userPicture} source={{
@@ -23,7 +52,7 @@ export default function UserProfile({ navigation }: { navigation: any }) {
                 {/* <Text lightColor="rgba(0,0,0,0.8)"
                     darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Username: yuesie</Text> */}
                 <Text lightColor="rgba(0,0,0,0.8)"
-                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Joined on: July 21, 2022</Text>
+                    darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Joined on: {getDate()}</Text>
                 <Text lightColor="rgba(0,0,0,0.8)"
                     darkColor="rgba(255,255,255,0.8)" style={styles.userInfoText}>Stamps collected: 20</Text>
                 <Text lightColor="rgba(0,0,0,0.8)"

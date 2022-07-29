@@ -24,7 +24,12 @@ export default {
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "To upload stamps",
-        // "NSLocationWhenInUseUsageDescription": "Why are you requesting access to the device’s camera?"
+        "NSLocationWhenInUseUsageDescription": "To collect stamps",
+        'NSLocationAlwaysUsageDescription': 'To detect stamps nearby',
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
       }
     },
     "android": {
