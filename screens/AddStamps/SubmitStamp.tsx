@@ -5,9 +5,11 @@ import { Text, View } from '../../components/Themed';
 import useColorScheme from '../../hooks/useColorScheme';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { getDatabase, push, ref } from 'firebase/database';
+import { ref as storageRef, getStorage, uploadBytes } from "firebase/storage";
 
-
-
+import app from '../../config/firebase';
+import Toast from 'react-native-root-toast';
 
 export default function SubmitStamp({ navigation }: { navigation: any }) {
     const theme = useColorScheme();
@@ -16,6 +18,7 @@ export default function SubmitStamp({ navigation }: { navigation: any }) {
     const [latitude, setLatitude] = useState<string>('');
     const [longitude, setLongitude] = useState<string>('');
     const [image, setImage] = useState<string>('');
+    const [toastVisible, setToastVisible] = useState<boolean>(false);
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -32,6 +35,23 @@ export default function SubmitStamp({ navigation }: { navigation: any }) {
             setImage(result.uri);
         }
     };
+
+    const handleStampSubmit = async () => {
+        const response = await fetch(image);
+        const blob = response.blob();
+        const db = getDatabase(app);
+        console.log('stamp')
+        console.log('blob', blob)
+        const ref_key = push(ref(db, 'stamps')).key;
+        push(ref(db, 'stamps/'), {
+            stampName: stampName,
+            latitude: latitude,
+            longitude: longitude,
+        }).then((response) => console.log('sucessfully submitted stamp'))
+        const storage = getStorage(app);
+        uploadBytes(storageRef(storage, 'stamps/' + ref_key + '/'), await blob);
+        setToastVisible(true);
+    }
 
 
     // need to regex check that latitdue and longtidue are valid numbers
@@ -72,9 +92,10 @@ export default function SubmitStamp({ navigation }: { navigation: any }) {
                     <MaterialCommunityIcons name="postage-stamp" size={200} color={theme === 'light' ? '#635468' : "#eea382"} />}
             </View>
 
-            <Pressable style={({ pressed }) => [styles.addStampButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => { }} >
+            <Pressable style={({ pressed }) => [styles.addStampButton, { opacity: pressed ? 0.5 : 1 }]} onPress={() => handleStampSubmit()} >
                 <Text style={styles.buttonText}>Submit for stamp review</Text>
             </Pressable>
+            <Toast visible={toastVisible}>Stamp successfully submitted!</Toast>
 
         </View>
     );
@@ -145,3 +166,4 @@ const styles = StyleSheet.create({
     },
 
 });
+

@@ -24,7 +24,6 @@ export default function SignUpScreen({ navigation }: any) {
 
     function writeUserData(userId: any, name: string, email: string, imageUrl: string) {
         const db = getDatabase(app);
-        console.log('database', db)
         const today = Date.now();
         set(ref(db, 'users/' + userId), {
             username: name,

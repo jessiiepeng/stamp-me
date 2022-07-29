@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import "firebase/auth";
 import 'firebase/database';
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,7 +20,7 @@ const firebaseConfig = {
     messagingSenderId: Constants.manifest?.extra?.firebaseMessagingSenderId,
     appId: Constants.manifest?.extra?.firebaseAppId,
     measurementId: Constants.manifest?.extra?.measurementId,
-    databaseURL: "https://stamp-10be7-default-rtdb.firebaseio.com",
+    databaseURL: Constants.manifest?.extra?.firebaseDatabaseURL,
 };
 
 // Initialize Firebase
@@ -29,5 +30,7 @@ export const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
 export const database = getDatabase(app);
+
+export const storage = getStorage(app);
 
 export default app;
