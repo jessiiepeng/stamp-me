@@ -11,8 +11,11 @@ That's the motivation for this mobile app. For every location you visit, if ther
 ## Technical Details
 
 Status: [IN PROGRESS]
+
 Date: May 2022 - ???
+
 Stack: React Native, TypeScript, Firebase (Realtime Database, Authentication, Storage)
+
 Progress + Next Steps: 
 * Geolocation to track user location constantly
 * Notification sending
